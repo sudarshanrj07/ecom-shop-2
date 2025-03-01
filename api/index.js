@@ -1,4 +1,4 @@
-import express, { urlencoded } from "express";
+import express from "express";
 import "dotenv/config";
 import { dbConnect } from "./configs/dbConnect.js";
 import routes from "./routes/routes.js";
