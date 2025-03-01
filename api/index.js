@@ -1,12 +1,25 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import "dotenv/config";
+import { dbConnect } from "./configs/dbConnect.js";
+import routes from "./routes/routes.js";
+import { errorHandler, notFound } from "./middlewares/errorHandler.js";
 
 const app = express();
 
-const { PORT } = process.env;
+const { PORT, DB_URL } = process.env;
 
-app.get("/", (req, res) => {
-	res.send("Hi There!");
-});
+//database connection
+dbConnect(DB_URL);
+
+//global middlewares
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+//routes
+app.use("/api", routes);
+
+//custom middlewares
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(PORT || 3000);
