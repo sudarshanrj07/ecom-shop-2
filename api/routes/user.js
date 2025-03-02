@@ -7,14 +7,15 @@ import {
 	loginUserHandler,
 	updateUser,
 } from "../controllers/user.js";
+import { adminAuth, userAuth } from "../middlewares/authentication.js";
 
 const router = Router();
 
 router.post("/signup", createUserHandler);
 router.post("/signin", loginUserHandler);
-router.get("/get-all-users", getAllUser);
-router.get("/get-user/:id", getUser);
+router.get("/get-all-users", userAuth, adminAuth, getAllUser);
+router.get("/get-user/", userAuth, getUser);
+router.put("/update-user/", userAuth, updateUser);
 router.delete("/delete-user/:id", deleteUser);
-router.put("/update-user/:id", updateUser);
 
 export default router;

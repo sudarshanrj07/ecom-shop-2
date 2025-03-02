@@ -35,7 +35,7 @@ export const loginUserHandler = asyncHandler(async (req, res) => {
 });
 
 export const updateUser = asyncHandler(async (req, res) => {
-	const { id } = req.params;
+	const { id } = req.user;
 	try {
 		const updatedUser = await User.findByIdAndUpdate(
 			id,
@@ -62,7 +62,7 @@ export const getAllUser = asyncHandler(async (req, res) => {
 
 //fetch user by id
 export const getUser = asyncHandler(async (req, res) => {
-	const { id } = req.params;
+	const { id } = req.user;
 	try {
 		const findUser = await User.findById(id);
 		if (!findUser) throw new Error("User does not exists");
@@ -82,4 +82,4 @@ export const deleteUser = asyncHandler(async (req, res) => {
 	} catch (error) {
 		throw new Error(error);
 	}
-});
+}); //1:46
