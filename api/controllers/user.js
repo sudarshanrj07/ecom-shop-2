@@ -143,3 +143,28 @@ export const handleRefreshToken = asyncHandler(async (req, res) => {
 		return res.status(200).json(accessToken);
 	});
 });
+
+//User logout
+
+export const userLogout = asyncHandler(async (req, res) => {
+	const refreshToken = req.cookies.refreshToken;
+
+	if (!refreshToken) throw new Error("No RefreshToken found");
+
+	const findUser = await User.findOne({ refreshToken });
+
+	if (!findUser) {
+		res.clearCookie("refreshToken", { httpOnly: true, secure: true });
+		return res.sendStatus(204); //forbidden
+	}
+	await User.findOneAndUpdate(
+		{ refreshToken: refreshToken },
+		{ refreshToken: "" }
+	);
+
+	res.clearCookie("refreshToken", {
+		httpOnly: true,
+		secure: true,
+	});
+	return res.sendStatus(204); //forbidden
+});

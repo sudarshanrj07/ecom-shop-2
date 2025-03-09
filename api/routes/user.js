@@ -8,6 +8,7 @@ import {
 	handleRefreshToken,
 	loginUserHandler,
 	updateUser,
+	userLogout,
 } from "../controllers/user.js";
 import { adminAuth, userAuth } from "../middlewares/authentication.js";
 
@@ -21,5 +22,6 @@ router.put("/update-user/", userAuth, updateUser);
 router.delete("/delete-user/:id", deleteUser);
 router.put("/user-block-unblock/:id", userAuth, adminAuth, blockUnblockUser);
 router.get("/refresh", handleRefreshToken);
+router.get("/logout", userLogout);
 
 export default router;
