@@ -30,6 +30,10 @@ const userSchema = new Schema(
 			enum: ["user", "admin"],
 			default: "user",
 		},
+		isBlocked: {
+			type: Boolean,
+			default: false,
+		},
 		cart: {
 			type: Array,
 			default: [],
@@ -46,6 +50,7 @@ const userSchema = new Schema(
 				ref: "Product",
 			},
 		],
+		refreshToken: String,
 	},
 	{
 		timestamps: true,
